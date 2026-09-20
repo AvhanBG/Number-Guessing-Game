@@ -1,15 +1,35 @@
 import random
 
-generated = random.randint(1, 100)
-
-max_attempts = 3
 attempts_used = 0
+
+while True:
+    try:
+        minimum = int(input("Enter the minimum number: "))
+        maximum = int(input("Enter the maximum number: "))
+        if 0 < minimum < maximum:
+            break
+        else:
+            print("Minimum number must be greater than 0, and less than the maximum.")
+    except ValueError:
+        print("Invalid input. Please enter whole numbers.")
+
+while True:
+    try:
+        max_attempts = int(input("Enter the maximum number of attempts: "))
+        if max_attempts > 0:
+            break
+        else:
+            print("Attempts must be greater than 0.")
+    except ValueError:
+        print("Invalid input. Please enter a whole number greater than 0.")
+
+generated = random.randint(minimum, maximum)
 
 while attempts_used < max_attempts:
     print(generated)
     try:
-        guess = int(input("Guess a number between 1 and 100: "))
-        if 1 <= guess <= 100:
+        guess = int(input(f"Guess a number between {minimum} and {maximum}: "))
+        if minimum <= guess <= maximum:
             attempts_used += 1
             if guess == generated:
                 print("\nCongratulations! \nYou guessed the number in " + str(attempts_used) + " attempts!")
@@ -19,7 +39,7 @@ while attempts_used < max_attempts:
             elif guess < generated:
                 print("Higher!")
         else:
-            print("Number must be between 1 and 100.")
+            print(f"Your guess must be between {minimum} and {maximum}.")
     except ValueError:
         print("Please enter a whole number.")
 else:
