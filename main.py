@@ -1,7 +1,11 @@
 import random
+from stats import Stats
 
+stats = Stats()
 while True:
+    
     attempts_used = 0
+
     while True:
         try:
             minimum = int(input("Enter the minimum number: "))
@@ -12,6 +16,7 @@ while True:
                 print("Minimum number must be greater than 0, and less than the maximum.")
         except ValueError:
             print("Invalid input. Please enter whole numbers.")
+
     while True:
         try:
             max_attempts = int(input("Enter the maximum number of attempts: "))
@@ -31,6 +36,7 @@ while True:
                 attempts_used += 1
                 if guess == generated:
                     print("\nCongratulations! \nYou guessed the number in " + str(attempts_used) + " attempts!")
+                    stats.record_win(attempts_used)
                     break
                 elif guess > generated:
                     print("Lower!")
@@ -43,10 +49,13 @@ while True:
     else:
         print("Game over!")
         print(f"The generated number was {generated}!")
+        stats.record_loss(attempts_used)
 
-    play_again = input("Do you want to play again? (y/n)" ).lower()
+    play_again = input("Do you want to play again? (y/n) ").lower()
+    
     if play_again != 'y':
         print("Thanks for playing!")
+        stats.display_stats()
         break
     else:
         print("Starting a new game...")
