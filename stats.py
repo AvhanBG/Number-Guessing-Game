@@ -17,7 +17,7 @@ class Stats:
         self.lifetime_attempts += attempts
 
     def display_stats(self):
-        print("\nNumber Guessing Game Statistics:")
+        print("\n--Number Guessing Game Statistics--")
         print(f"Games Played: {self.games_played}")
         print(f"Wins: {self.wins}")
         print(f"Losses: {self.losses}")
