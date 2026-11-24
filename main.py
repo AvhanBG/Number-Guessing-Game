@@ -2,15 +2,17 @@ import random
 from stats import Stats
 
 stats = Stats()
+stats.load_stats()
+
 while True:
     
-    attempts_used = 0
+    attempts = 0
 
     while True:
         try:
             minimum = int(input("Enter the minimum number: "))
-            maximum = int(input("Enter the maximum number: "))
-            if 0 < minimum < maximum:
+            maximum = int(input("Enter the maximum number: ")) 
+            if 0 < minimum < maximum: # checks if the minimum is greater than 0 and the maximum is greater than the minimum
                 break
             else:
                 print("Minimum number must be greater than 0, and less than the maximum.")
@@ -29,14 +31,15 @@ while True:
 
     generated = random.randint(minimum, maximum)
 
-    while attempts_used < max_attempts:
+    while attempts < max_attempts:
         try:
             guess = int(input(f"Guess a number between {minimum} and {maximum}: "))
             if minimum <= guess <= maximum:
-                attempts_used += 1
+                attempts += 1
                 if guess == generated:
-                    print("\nCongratulations! \nYou guessed the number in " + str(attempts_used) + " attempts!")
-                    stats.record_win(attempts_used)
+                    print("\nCongratulations! \nYou guessed the number in " + str(attempts) + " attempts!")
+                    stats.record_win(attempts) 
+                    stats.record_game(attempts)
                     break
                 elif guess > generated:
                     print("Lower!")
@@ -47,9 +50,11 @@ while True:
         except ValueError:
             print("Please enter a whole number.")
     else:
-        print("Game over!")
-        print(f"The generated number was {generated}!")
-        stats.record_loss(attempts_used)
+        print(f"\nGame Over! \nThe generated number was {generated}!")
+        stats.record_loss(attempts) 
+        stats.record_game(attempts)
+
+    stats.save_stats()
 
     play_again = input("Do you want to play again? (y/n) ").lower()
     
